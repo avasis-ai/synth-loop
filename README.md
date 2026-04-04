@@ -2,6 +2,8 @@
 
 > The AI that upgrades itself. Point it at any codebase and it runs forever, getting smarter with every cycle.
 
+<img src="docs/demo.gif" alt="synth-loop terminal demo" width="700">
+
 ```bash
 npx @avasis-ai/synth-loop run ./my-project --auto-publish --self-upgrade
 ```
