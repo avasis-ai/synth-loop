@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { SynthLoop } from "./loop.js";
 import { scanDiff, generateHardenedGitignore } from "./security.js";
 import { writeFileSync } from "node:fs";

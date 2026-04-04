@@ -8,8 +8,14 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
-      "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./cli": {
       "import": "./dist/cli.js",
@@ -17,9 +23,13 @@
     }
   },
   "bin": {
-    "synth-loop": "./dist/cli.js"
+    "synth-loop": "dist/cli.js"
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
@@ -27,15 +37,27 @@
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
-    "ai", "agent", "self-improving", "recursive", "bootstrapping",
-    "autonomous", "open-source", "upgrade", "synth", "loop",
-    "claude-code", "aider", "coding-agent", "viral", "ouroboros"
+    "ai",
+    "agent",
+    "self-improving",
+    "recursive",
+    "bootstrapping",
+    "autonomous",
+    "open-source",
+    "upgrade",
+    "synth",
+    "loop",
+    "claude-code",
+    "aider",
+    "coding-agent",
+    "viral",
+    "ouroboros"
   ],
   "license": "MIT",
   "author": "Avasis AI",
   "repository": {
     "type": "git",
-    "url": "https://github.com/avasis-ai/synth-loop"
+    "url": "git+https://github.com/avasis-ai/synth-loop.git"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
