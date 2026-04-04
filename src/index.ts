@@ -1,5 +1,10 @@
 export { SynthLoop } from "./loop.js";
-export type { LogFn } from "./loop.js";
+export { Cluster } from "./cluster.js";
+export { TaskRouter } from "./router.js";
+export { ConsensusEngine } from "./consensus.js";
+export { SpeculativeExecutor } from "./speculative.js";
+export { AdaptiveRetry } from "./adaptive.js";
+export type { LogFn } from "./types.js";
 export { scanDiff, generateHardenedGitignore } from "./security.js";
 export {
   buildDiscoverPrompt, buildAnalyzePrompt, buildImplementPrompt, buildFixPrompt,
@@ -12,4 +17,6 @@ export {
 export type {
   LoopConfig, LoopState, CycleResult, Pattern, Gap,
   VerifyResult, SecurityResult, SecurityIssue, RepoSource,
+  ClusterConfig, AgentSlot, AgentRole, TaskRequest, TaskResult,
+  TaskType, ConsensusResult, SpeculativeResult, RetryStrategy, ClusterStats,
 } from "./types.js";

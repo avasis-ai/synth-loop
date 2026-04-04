@@ -1,17 +1,46 @@
+export interface AgentSlot {
+  id: string;
+  model: string;
+  role: AgentRole;
+  ollamaUrl: string;
+  maxTokens?: number;
+  temperature?: number;
+}
+
+export type AgentRole =
+  | "planner"
+  | "implementer"
+  | "reviewer"
+  | "attacker"
+  | "fixer"
+  | "clerk";
+
+export interface ClusterConfig {
+  slots: AgentSlot[];
+  ollamaUrl?: string;
+  maxParallel?: number;
+  requestTimeoutMs?: number;
+  retryAttempts?: number;
+  retryBackoffMs?: number;
+}
+
 export interface LoopConfig {
   repoPath: string;
-  model: string;
-  provider?: string;
+  cluster: ClusterConfig;
   repos: RepoSource[];
   context7Key?: string;
   morphApiKey?: string;
   cycleSleepMs?: number;
   maxConsecutiveFailures?: number;
-  maxTurns?: number;
   autoFix?: boolean;
   autoPublish?: boolean;
   selfUpgrade?: boolean;
+  packageName?: string;
   dryRun?: boolean;
+  useMorph?: boolean;
+  speculativeDrafts?: number;
+  consensusMinAgreement?: number;
+  maxDebateRounds?: number;
 }
 
 export interface RepoSource {
@@ -45,6 +74,63 @@ export interface Gap {
   priority: number;
 }
 
+export interface TaskRequest {
+  type: TaskType;
+  role: AgentRole;
+  system: string;
+  user: string;
+  maxTokens?: number;
+  temperature?: number;
+  jsonMode?: boolean;
+}
+
+export type TaskType =
+  | "analyze"
+  | "implement"
+  | "review"
+  | "attack"
+  | "fix_tsc"
+  | "fix_test"
+  | "fix_build"
+  | "security"
+  | "commit"
+  | "plan";
+
+export interface TaskResult {
+  slotId: string;
+  model: string;
+  role: AgentRole;
+  content: string;
+  tokensIn?: number;
+  tokensOut?: number;
+  durationMs: number;
+  success: boolean;
+  error?: string;
+}
+
+export interface ConsensusResult {
+  agreed: boolean;
+  content: string;
+  votes: TaskResult[];
+  confidence: number;
+  arbitrator?: TaskResult;
+}
+
+export interface SpeculativeResult {
+  accepted: boolean;
+  draft: TaskResult;
+  verification?: TaskResult;
+  final: string;
+  savedTokens: number;
+}
+
+export interface RetryStrategy {
+  failureType: "tsc" | "test" | "build" | "security" | "review" | "timeout" | "unknown";
+  slotId: string;
+  maxAttempts: number;
+  backoffMs: number;
+}
+
 export interface VerifyResult {
   tsc: boolean;
   tests: boolean;
@@ -64,6 +150,7 @@ export interface CycleResult {
   tests?: number;
   error?: string;
   duration_s: number;
+  phases?: Record<string, number>;
 }
 
 export interface LoopState {
@@ -76,6 +163,18 @@ export interface LoopState {
   version: string;
   lastCommit: string | null;
   lastPublishedVersion: string | null;
+  clusterStats: ClusterStats;
+}
+
+export interface ClusterStats {
+  totalRequests: number;
+  totalTokens: number;
+  totalDurationMs: number;
+  bySlot: Record<string, { requests: number; tokens: number; errors: number }>;
+  consensusHits: number;
+  consensusMisses: number;
+  speculativeAccepted: number;
+  speculativeRejected: number;
 }
 
 export interface SecurityIssue {
@@ -87,3 +186,5 @@ export interface SecurityResult {
   safe: boolean;
   issues: SecurityIssue[];
 }
+
+export type LogFn = (level: string, msg: string) => void;
