@@ -20,3 +20,5 @@ export type {
   ClusterConfig, AgentSlot, AgentRole, TaskRequest, TaskResult,
   TaskType, ConsensusResult, SpeculativeResult, RetryStrategy, ClusterStats,
 } from "./types.js";
+
+export { ClusterProviderBridge } from "./cluster-provider-bridge.js";
