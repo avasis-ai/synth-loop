@@ -1,6 +1,6 @@
 {
   "name": "@avasis-ai/synth-loop",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "The AI that upgrades itself. Recursive self-improvement loop for any open-source project.",
   "type": "module",
   "main": "./dist/index.cjs",
